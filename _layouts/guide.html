@@ -20,6 +20,17 @@ layout: default
         </div>
     </header>
 
+    {% if page.image %}
+    <div class="guide-image">
+        <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+        {% if page.image_credit %}
+        <p class="image-credit">
+            Photo by <a href="{{ page.image_credit_url }}" target="_blank" rel="noopener">{{ page.image_credit }}</a>
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
     <div class="guide-content container">
         {{ content }}
     </div>

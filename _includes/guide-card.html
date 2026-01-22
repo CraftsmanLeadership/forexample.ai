@@ -1,9 +1,15 @@
 <div class="guide-card" data-difficulty="{{ include.guide.difficulty }}" data-tags="{{ include.guide.tags | join: ',' }}" data-title="{{ include.guide.title | downcase }}" data-description="{{ include.guide.description | downcase }}">
     <a href="{{ include.guide.url | relative_url }}" class="card-link">
-        <div class="card-header">
-            <span class="difficulty difficulty-{{ include.guide.difficulty }}">{{ include.guide.difficulty | capitalize }}</span>
-            <span class="estimated-time">{{ include.guide.estimated_time }}</span>
+        {% if include.guide.image %}
+        <div class="card-image">
+            <img src="{{ include.guide.image | relative_url }}" alt="{{ include.guide.title }}" loading="lazy">
         </div>
+        {% endif %}
+        <div class="card-content">
+            <div class="card-header">
+                <span class="difficulty difficulty-{{ include.guide.difficulty }}">{{ include.guide.difficulty | capitalize }}</span>
+                <span class="estimated-time">{{ include.guide.estimated_time }}</span>
+            </div>
         <h2 class="card-title">{{ include.guide.title }}</h2>
         <p class="card-description">{{ include.guide.description }}</p>
         <div class="card-tags">
@@ -11,6 +17,7 @@
                 <span class="tag">{{ tag }}</span>
             {% endfor %}
         </div>
-        <time class="card-date" datetime="{{ include.guide.date | date_to_xmlschema }}">{{ include.guide.date | date: "%B %d, %Y" }}</time>
+            <time class="card-date" datetime="{{ include.guide.date | date_to_xmlschema }}">{{ include.guide.date | date: "%B %d, %Y" }}</time>
+        </div>
     </a>
 </div>

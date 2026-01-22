@@ -5,6 +5,7 @@ An AI education website that automatically generates and publishes step-by-step 
 ## Features
 
 - **Automatic Content Generation**: AI-powered guide generation using Claude Sonnet 4.5
+- **Visual Engagement**: Automatic image fetching from Unsplash for each guide
 - **Instructables-Style Design**: Clear, step-by-step guides with approachable language
 - **Difficulty Levels**: Beginner, Intermediate, and Advanced topics
 - **Responsive Design**: Works beautifully on desktop and mobile
@@ -21,7 +22,8 @@ Visit the site at: [https://forexample.ai](https://forexample.ai) (configure you
 2. The workflow runs a Node.js script that:
    - Selects an unused topic from the curated list
    - Calls the Claude API to generate an educational guide
-   - Creates a markdown file with proper front matter
+   - Fetches a relevant image from Unsplash
+   - Creates a markdown file with proper front matter and image attribution
    - Commits the new guide back to the repository
 3. GitHub Pages automatically rebuilds and deploys the updated site
 
@@ -145,6 +147,38 @@ Edit `scripts/generate-guide.js` to:
 - Modify the prompt for different content styles
 - Adjust the guide structure or format
 
+### Configuring Images
+
+The site automatically fetches images from Unsplash for each guide:
+
+**Using Unsplash API (Recommended)**:
+1. Get a free API key from [Unsplash Developers](https://unsplash.com/developers)
+2. Add it as a GitHub secret: `UNSPLASH_ACCESS_KEY`
+3. Update `.github/workflows/generate-content.yml` to include:
+   ```yaml
+   env:
+     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+     UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+   ```
+
+**Without API Key**:
+- The script uses Unsplash's source API (rate-limited, less reliable)
+- Images are still functional but may occasionally fail to fetch
+
+**Switching to AI-Generated Images**:
+To use DALL-E or Stable Diffusion instead:
+1. Update `scripts/generate-guide.js` - replace the `fetchAndSaveImage` function
+2. Add appropriate API keys to GitHub secrets
+3. Update image generation logic to call your chosen API
+
+**Adding Images to Existing Guides**:
+Add these fields to the front matter of any guide:
+```yaml
+image: "/assets/images/guides/your-image.jpg"
+image_credit: "Photographer Name"
+image_credit_url: "https://unsplash.com/@photographer"
+```
+
 ## Project Structure
 
 ```
@@ -162,7 +196,8 @@ forexample.ai/
 ├── _guides/                       # AI-generated guides
 ├── assets/
 │   ├── css/main.css              # Site styling
-│   └── js/main.js                # Interactive features
+│   ├── js/main.js                # Interactive features
+│   └── images/guides/            # Guide images
 ├── scripts/
 │   └── generate-guide.js         # Content generation script
 ├── topics.json                    # Curated AI topics

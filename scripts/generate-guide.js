@@ -1,4 +1,5 @@
 const Anthropic = require('@anthropic-ai/sdk');
+const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
@@ -11,10 +12,14 @@ const anthropic = new Anthropic({
 const TOPICS_FILE = path.join(__dirname, '..', 'topics.json');
 const GENERATED_TOPICS_FILE = path.join(__dirname, '..', 'generated-topics.json');
 const GUIDES_DIR = path.join(__dirname, '..', '_guides');
+const IMAGES_DIR = path.join(__dirname, '..', 'assets', 'images', 'guides');
 
-// Ensure guides directory exists
+// Ensure directories exist
 if (!fs.existsSync(GUIDES_DIR)) {
   fs.mkdirSync(GUIDES_DIR, { recursive: true });
+}
+if (!fs.existsSync(IMAGES_DIR)) {
+  fs.mkdirSync(IMAGES_DIR, { recursive: true });
 }
 
 // Read topics and generated topics
@@ -102,8 +107,89 @@ function generateDescription(title, difficulty) {
   return `${starters[difficulty]} ${title.toLowerCase()}`;
 }
 
+// Generate image search query from topic
+function generateImageQuery(topic) {
+  // Extract main keywords for image search
+  const keywords = topic.tags.slice(0, 2).join(' ');
+  return `artificial intelligence ${keywords} technology`;
+}
+
+// Fetch and download image from Unsplash
+async function fetchAndSaveImage(topic) {
+  try {
+    const query = generateImageQuery(topic);
+    const slug = topic.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+    const filename = `${slug}.jpg`;
+    const filepath = path.join(IMAGES_DIR, filename);
+
+    // Check if image already exists
+    if (fs.existsSync(filepath)) {
+      console.log(`Image already exists: ${filename}`);
+      return {
+        path: `/assets/images/guides/${filename}`,
+        credit: 'Unsplash',
+        credit_url: 'https://unsplash.com'
+      };
+    }
+
+    console.log(`Fetching image for: ${query}`);
+
+    // Use Unsplash API if key is provided, otherwise use source API
+    let imageUrl;
+    let photographerName = 'Unsplash';
+    let photographerUrl = 'https://unsplash.com';
+
+    if (process.env.UNSPLASH_ACCESS_KEY) {
+      // Use official Unsplash API
+      const response = await axios.get('https://api.unsplash.com/search/photos', {
+        params: {
+          query: query,
+          per_page: 1,
+          orientation: 'landscape'
+        },
+        headers: {
+          'Authorization': `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`
+        }
+      });
+
+      if (response.data.results && response.data.results.length > 0) {
+        const photo = response.data.results[0];
+        imageUrl = photo.urls.regular;
+        photographerName = photo.user.name;
+        photographerUrl = photo.user.links.html;
+      }
+    }
+
+    // Fallback to Unsplash Source API (no auth required, but less control)
+    if (!imageUrl) {
+      imageUrl = `https://source.unsplash.com/1200x600/?${encodeURIComponent(query)}`;
+    }
+
+    // Download image
+    const imageResponse = await axios.get(imageUrl, {
+      responseType: 'arraybuffer'
+    });
+
+    fs.writeFileSync(filepath, imageResponse.data);
+    console.log(`Image saved: ${filename}`);
+
+    return {
+      path: `/assets/images/guides/${filename}`,
+      credit: photographerName,
+      credit_url: photographerUrl
+    };
+  } catch (error) {
+    console.error('Error fetching image:', error.message);
+    // Return null if image fetch fails - guide will work without image
+    return null;
+  }
+}
+
 // Create guide file
-function createGuideFile(topic, content) {
+async function createGuideFile(topic, content, imageData) {
   const filename = createFilename(topic.title);
   const filepath = path.join(GUIDES_DIR, filename);
 
@@ -114,14 +200,24 @@ function createGuideFile(topic, content) {
   const wordCount = content.split(/\s+/).length;
   const readingTime = Math.ceil(wordCount / 200);
 
-  const frontMatter = `---
+  // Build front matter with optional image data
+  let frontMatter = `---
 layout: guide
 title: "${topic.title}"
 date: ${date}
 difficulty: ${topic.difficulty}
 tags: [${topic.tags.map(tag => `"${tag}"`).join(', ')}]
 description: "${description}"
-estimated_time: "${readingTime} min read"
+estimated_time: "${readingTime} min read"`;
+
+  if (imageData) {
+    frontMatter += `
+image: "${imageData.path}"
+image_credit: "${imageData.credit}"
+image_credit_url: "${imageData.credit_url}"`;
+  }
+
+  frontMatter += `
 ---
 
 `;
@@ -155,8 +251,12 @@ async function main() {
     console.log('Generating content with Claude...');
     const content = await generateGuideContent(topic);
 
+    // Fetch image
+    console.log('Fetching image...');
+    const imageData = await fetchAndSaveImage(topic);
+
     // Create guide file
-    const filename = createGuideFile(topic, content);
+    const filename = await createGuideFile(topic, content, imageData);
 
     // Update generated topics
     if (!generatedTopics.includes(topic.title)) {
