@@ -42,6 +42,8 @@ AI doesn't learn like copying information into its memory. Instead, it learns by
 
 This process is called **machine learning**, and it's a type of AI.
 
+> **💡 Key Insight:** AI doesn't "think" like humans do—it finds mathematical patterns in data. When you see AI doing something impressive, remember it's really good pattern recognition, not consciousness!
+
 ## Types of AI You Should Know
 
 ### Narrow AI (Weak AI)
@@ -84,6 +86,13 @@ This would be AI that can do any intellectual task a human can do. **This doesn'
 
 ## Further Reading
 
-- **"AI for Everyone" by Andrew Ng**: A free online course that explains AI concepts without requiring programming knowledge
-- **"The Alignment Problem" by Brian Christian**: An accessible book exploring how AI learns and the challenges involved
-- **AI News**: Follow sites like MIT Technology Review or The Verge's AI section to stay updated on AI developments
+- [AI for Everyone by Andrew Ng](https://www.coursera.org/learn/ai-for-everyone) - Free online course explaining AI concepts without requiring programming knowledge
+- [The Alignment Problem by Brian Christian](https://brianchristian.org/the-alignment-problem/) - Accessible book exploring how AI learns and the challenges involved
+- [MIT Technology Review - AI Section](https://www.technologyreview.com/topic/artificial-intelligence/) - Stay updated on the latest AI developments
+
+## Related Guides
+
+Want to dive deeper? Check out these related guides:
+
+- [How to Write Better Prompts for AI](/guides/how-to-write-better-prompts-for-ai/)
+- [What is a Neural Network?](/guides/what-is-a-neural-network/)

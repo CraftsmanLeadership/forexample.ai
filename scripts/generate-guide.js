@@ -49,27 +49,43 @@ function selectNextTopic(topics, generatedTopics) {
 
 // Generate guide content using NVIDIA API
 async function generateGuideContent(topic) {
-  const prompt = `Create an educational guide about "${topic.title}" for an AI learning website.
+  const prompt = `Create an educational guide about "${topic.title}" for an AI learning website called "For Example AI".
 
-The guide should be:
-- Written in an Instructables-style format: clear, step-by-step, and approachable
+WRITING STYLE & PERSONALITY:
+- Write with personality! Be conversational, enthusiastic, and human
+- Use "I" and "we" occasionally to create connection with readers
+- Include personal observations, opinions, or insights where appropriate
+- Share why YOU think this topic is interesting or important
+- Use humor sparingly but effectively
+- Show passion for teaching - let your excitement about AI shine through
+- Write like you're explaining to a curious friend over coffee, not lecturing
 - Appropriate for ${topic.difficulty} level readers
-- Use everyday analogies and examples to explain concepts
-- Include practical applications where relevant
-- Be engaging and easy to follow
 
-Structure the guide with these sections:
-1. Introduction (2-3 sentences explaining what the reader will learn)
+VISUAL FORMATTING:
+- Use callout boxes for important points: > **💡 Pro Tip:** for tips, > **⚠️ Watch Out:** for warnings, > **🎯 Key Insight:** for key concepts
+- Add emojis strategically in headers and callouts to add visual interest
+- Use **bold** liberally for emphasis
+- Create variety in section structure
+
+CONTENT STRUCTURE:
+1. Introduction (2-3 sentences with personality - hook the reader!)
 2. Prerequisites (if any, or state "No prerequisites needed")
-3. Step-by-step explanation with clear headers (3-5 main sections)
-4. Real-world examples or analogies
-5. Try It Yourself (practical suggestions or thought experiments)
-6. Key Takeaways (bullet points summarizing main concepts)
-7. Further Reading (2-3 suggestions for learning more)
+3. Step-by-step explanation with clear headers (3-5 main sections with varied formatting)
+4. Real-world examples with personal commentary on why they matter
+5. Try It Yourself (practical, specific suggestions)
+6. Key Takeaways (bullet points)
+7. Further Reading (2-3 ACTUAL RESOURCES with real URLs as markdown links)
 
-Write in Markdown format. Use headers (##, ###), bullet points, numbered lists, and **bold** for emphasis.
-Do NOT include the front matter (YAML) - only the content body.
-Keep the tone friendly, educational, and encouraging.`;
+FURTHER READING FORMAT:
+Make these REAL, CLICKABLE links to actual resources. Format as:
+- [Resource Title](https://actual-url.com) - Brief description of what it offers
+
+Example:
+- [3Blue1Brown Neural Networks](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) - Excellent visual explanation series
+- [Fast.ai Practical Deep Learning](https://course.fast.ai/) - Free hands-on course
+
+Write in Markdown format. Do NOT include the front matter (YAML) - only the content body.
+Be friendly, be human, be helpful!`;
 
   try {
     const response = await axios.post(
@@ -98,6 +114,52 @@ Keep the tone friendly, educational, and encouraging.`;
   } catch (error) {
     console.error('NVIDIA API Error:', error.response?.data || error.message);
     throw error;
+  }
+}
+
+// Find related guides based on shared tags
+function findRelatedGuides(topic, maxRelated = 3) {
+  try {
+    const guides = fs.readdirSync(GUIDES_DIR)
+      .filter(file => file.endsWith('.md'))
+      .map(file => {
+        const content = fs.readFileSync(path.join(GUIDES_DIR, file), 'utf-8');
+        const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+        if (!frontMatterMatch) return null;
+
+        const frontMatter = frontMatterMatch[1];
+        const titleMatch = frontMatter.match(/title:\s*"(.+?)"/);
+        const tagsMatch = frontMatter.match(/tags:\s*\[(.*?)\]/);
+
+        if (!titleMatch) return null;
+
+        const title = titleMatch[1];
+        const tags = tagsMatch ? tagsMatch[1].split(',').map(t => t.trim().replace(/"/g, '')) : [];
+
+        return { title, tags, file };
+      })
+      .filter(guide => guide !== null);
+
+    // Calculate relevance score based on shared tags
+    const scoredGuides = guides
+      .map(guide => {
+        const sharedTags = guide.tags.filter(tag => topic.tags.includes(tag));
+        return {
+          ...guide,
+          score: sharedTags.length
+        };
+      })
+      .filter(guide => guide.score > 0 && guide.title !== topic.title)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, maxRelated);
+
+    return scoredGuides.map(guide => ({
+      title: guide.title,
+      url: `/guides/${guide.file.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '')}/`
+    }));
+  } catch (error) {
+    console.error('Error finding related guides:', error.message);
+    return [];
   }
 }
 
@@ -210,6 +272,18 @@ async function createGuideFile(topic, content, imageData) {
   const date = new Date().toISOString().split('T')[0];
   const description = generateDescription(topic.title, topic.difficulty);
 
+  // Find related guides
+  const relatedGuides = findRelatedGuides(topic);
+
+  // Add related guides section if any found
+  if (relatedGuides.length > 0) {
+    content += `\n\n## Related Guides\n\n`;
+    content += `Want to learn more? Check out these related guides:\n\n`;
+    relatedGuides.forEach(guide => {
+      content += `- [${guide.title}](${guide.url})\n`;
+    });
+  }
+
   // Estimate reading time (rough: 200 words per minute)
   const wordCount = content.split(/\s+/).length;
   const readingTime = Math.ceil(wordCount / 200);
@@ -240,6 +314,9 @@ image_credit_url: "${imageData.credit_url}"`;
   fs.writeFileSync(filepath, fullContent);
 
   console.log(`Created guide: ${filename}`);
+  if (relatedGuides.length > 0) {
+    console.log(`Added ${relatedGuides.length} related guide links`);
+  }
   return filename;
 }
 

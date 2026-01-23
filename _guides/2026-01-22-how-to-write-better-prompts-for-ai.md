@@ -72,6 +72,8 @@ Ask the AI to think through problems step-by-step:
 
 Breaking it down often leads to better reasoning.
 
+> **💡 Pro Tip:** Combining techniques works wonders! Try "You are a data scientist. Using the example datasets I provided, explain step-by-step how to identify outliers." Multi-technique prompts often yield the best results.
+
 ## Common Mistakes to Avoid
 
 ### Mistake 1: Being Too Vague
@@ -144,6 +146,13 @@ Here's a template you can use for complex prompts:
 
 ## Further Reading
 
-- **OpenAI's Prompt Engineering Guide**: Official documentation with advanced techniques
-- **Prompt Engineering Reddit (r/PromptEngineering)**: Community sharing tips and examples
-- **"The AI Whisperer" blog**: Regular tips and tricks for better AI interactions
+- [OpenAI's Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering) - Official documentation with advanced techniques
+- [r/PromptEngineering](https://www.reddit.com/r/PromptEngineering/) - Community sharing tips, examples, and best practices
+- [Learn Prompting](https://learnprompting.org/) - Free comprehensive course on prompt engineering
+
+## Related Guides
+
+Ready to explore more AI concepts?
+
+- [What is Artificial Intelligence?](/guides/what-is-artificial-intelligence/)
+- [Understanding Transformer Architecture](/guides/understanding-transformer-architecture/)

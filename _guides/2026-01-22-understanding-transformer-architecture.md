@@ -199,7 +199,14 @@ Recent developments include:
 
 ## Further Reading
 
-- **"Attention Is All You Need"**: The original transformer paper (technical but foundational)
-- **The Illustrated Transformer by Jay Alammar**: Visual, intuitive explanation of transformer architecture
-- **Stanford CS224N**: Free course covering transformers and modern NLP (lectures available on YouTube)
-- **Hugging Face Documentation**: Practical guides for using transformer models
+- [Attention Is All You Need (Original Paper)](https://arxiv.org/abs/1706.03762) - The original transformer paper (technical but foundational)
+- [The Illustrated Transformer by Jay Alammar](https://jalammar.github.io/illustrated-transformer/) - Visual, intuitive explanation of transformer architecture
+- [Stanford CS224N](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ) - Free course covering transformers and modern NLP
+- [Hugging Face Documentation](https://huggingface.co/docs/transformers/) - Practical guides for using transformer models
+
+## Related Guides
+
+Deepen your understanding of AI architectures:
+
+- [What is a Neural Network?](/guides/what-is-a-neural-network/)
+- [What is Artificial Intelligence?](/guides/what-is-artificial-intelligence/)

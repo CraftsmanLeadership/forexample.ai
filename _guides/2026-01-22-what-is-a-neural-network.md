@@ -153,6 +153,13 @@ Training large neural networks requires significant computing power and energy, 
 
 ## Further Reading
 
-- **3Blue1Brown's Neural Network Series**: Excellent video explanations with visualizations (YouTube)
-- **"Neural Networks and Deep Learning" by Michael Nielsen**: Free online book with interactive examples
-- **Fast.ai Course**: Practical course that teaches you to build neural networks (no PhD required)
+- [3Blue1Brown's Neural Network Series](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) - Excellent video explanations with visualizations
+- [Neural Networks and Deep Learning by Michael Nielsen](http://neuralnetworksanddeeplearning.com/) - Free online book with interactive examples
+- [Fast.ai Practical Deep Learning Course](https://course.fast.ai/) - Hands-on course teaching you to build neural networks (no PhD required)
+
+## Related Guides
+
+Continue your AI learning journey:
+
+- [What is Artificial Intelligence?](/guides/what-is-artificial-intelligence/)
+- [Understanding Transformer Architecture](/guides/understanding-transformer-architecture/)

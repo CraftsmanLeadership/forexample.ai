@@ -411,10 +411,61 @@ body {
 
 .guide-content blockquote {
     border-left: 4px solid var(--primary-color);
-    padding-left: 1.5rem;
+    padding: 1rem 1.5rem;
     margin: 1.5rem 0;
-    color: var(--text-light);
-    font-style: italic;
+    background-color: rgba(255, 102, 0, 0.05);
+    border-radius: 4px;
+    font-style: normal;
+}
+
+.guide-content blockquote p {
+    margin-bottom: 0.5rem;
+}
+
+.guide-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Colorful callout boxes for tips, warnings, insights */
+.guide-content blockquote:has(strong:first-child) {
+    background-color: rgba(40, 167, 69, 0.08);
+    border-left-color: #28a745;
+}
+
+/* Links styling */
+.guide-content a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.guide-content a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Make Further Reading section stand out */
+.guide-content h2:last-of-type {
+    color: var(--primary-color);
+}
+
+/* Add visual variety to sections */
+.guide-content h3 {
+    color: var(--secondary-color);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.guide-content h3::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .guide-footer {
