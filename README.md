@@ -5,9 +5,12 @@ An AI education website that automatically generates and publishes step-by-step 
 ## Features
 
 - **Automatic Content Generation**: AI-powered guide generation using NVIDIA's free Llama 3.1 70B model
+- **Daily Publishing**: New guides automatically generated and published every day
+- **Link Validation**: Automatic checking of external links to ensure quality resources
 - **Visual Engagement**: Automatic image fetching from Unsplash for each guide
 - **Instructables-Style Design**: Clear, step-by-step guides with approachable language
 - **Difficulty Levels**: Beginner, Intermediate, and Advanced topics
+- **Cross-Linking**: Related guides automatically linked based on shared topics
 - **Responsive Design**: Works beautifully on desktop and mobile
 - **Search & Filter**: Find guides by difficulty level or search keywords
 - **GitHub Pages Deployment**: Automatically deployed and hosted for free
@@ -18,14 +21,18 @@ Visit the site at: [https://forexample.ai](https://forexample.ai) (configure you
 
 ## How It Works
 
-1. Every push to the `main` branch triggers a GitHub Actions workflow
+1. Every day at 10:00 AM UTC, a GitHub Actions workflow automatically runs
 2. The workflow runs a Node.js script that:
-   - Selects an unused topic from the curated list
+   - Selects an unused topic from the curated list (50+ topics available)
    - Calls NVIDIA's free API to generate an educational guide
+   - Validates all external links to ensure quality resources
    - Fetches a relevant image from Unsplash
+   - Finds related guides based on shared tags
    - Creates a markdown file with proper front matter and image attribution
    - Commits the new guide back to the repository
 3. GitHub Pages automatically rebuilds and deploys the updated site
+
+You can also trigger generation manually or on every push to main branch.
 
 ## Setup Instructions
 
@@ -134,7 +141,18 @@ Visit the site at: [https://forexample.ai](https://forexample.ai) (configure you
 
 ### Adding Topics
 
-Edit `topics.json` to add new topics:
+**Interactive Method (Recommended)**:
+```bash
+npm run add-topic
+```
+
+This will interactively prompt you for:
+- Topic title
+- Difficulty level (beginner/intermediate/advanced)
+- Tags (comma-separated)
+
+**Manual Method**:
+Edit `topics.json` directly:
 
 ```json
 {
@@ -143,6 +161,13 @@ Edit `topics.json` to add new topics:
   "tags": ["tag1", "tag2", "tag3"]
 }
 ```
+
+**View Popular Tags**:
+```bash
+npm run show-tags
+```
+
+See `CONTENT_STRATEGY.md` for comprehensive content planning guidance.
 
 ### Customizing the Design
 
@@ -189,12 +214,28 @@ image_credit: "Photographer Name"
 image_credit_url: "https://unsplash.com/@photographer"
 ```
 
+## Available Commands
+
+```bash
+# Generate a new guide manually
+npm run generate
+
+# Check all guides for broken links
+npm run check-links
+
+# Add a new topic interactively
+npm run add-topic
+
+# Show most used tags
+npm run show-tags
+```
+
 ## Project Structure
 
 ```
 forexample.ai/
 ├── .github/workflows/
-│   └── generate-content.yml       # GitHub Actions workflow
+│   └── generate-content.yml       # GitHub Actions workflow (daily at 10am UTC)
 ├── _layouts/
 │   ├── default.html               # Base template
 │   ├── guide.html                 # Guide page template
@@ -203,15 +244,18 @@ forexample.ai/
 │   ├── header.html                # Site header
 │   ├── footer.html                # Site footer
 │   └── guide-card.html            # Guide preview card
-├── _guides/                       # AI-generated guides
+├── _guides/                       # AI-generated guides (auto-created)
 ├── assets/
 │   ├── css/main.css              # Site styling
 │   ├── js/main.js                # Interactive features
-│   └── images/guides/            # Guide images
+│   └── images/guides/            # Guide images (auto-fetched)
 ├── scripts/
-│   └── generate-guide.js         # Content generation script
-├── topics.json                    # Curated AI topics
+│   ├── generate-guide.js         # Content generation script
+│   ├── check-links.js            # Link validation script
+│   └── add-topic.js              # Interactive topic adding tool
+├── topics.json                    # Curated AI topics (50+ topics)
 ├── generated-topics.json          # Tracking file
+├── CONTENT_STRATEGY.md            # Content planning guide
 ├── _config.yml                    # Jekyll configuration
 ├── index.html                     # Homepage
 ├── package.json                   # Node dependencies

@@ -5,7 +5,9 @@
   "main": "scripts/generate-guide.js",
   "scripts": {
     "generate": "node scripts/generate-guide.js",
-    "check-links": "node scripts/check-links.js"
+    "check-links": "node scripts/check-links.js",
+    "add-topic": "node scripts/add-topic.js",
+    "show-tags": "node scripts/add-topic.js --tags"
   },
   "keywords": [
     "ai",

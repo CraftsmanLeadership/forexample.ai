@@ -1,6 +1,9 @@
 name: Generate AI Guide
 
 on:
+  schedule:
+    # Run daily at 10:00 AM UTC (5:00 AM EST / 2:00 AM PST)
+    - cron: '0 10 * * *'
   push:
     branches:
       - main
