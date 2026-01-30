@@ -14,5 +14,6 @@
   "Understanding Attention Mechanisms",
   "Gradient Descent Optimization Algorithms",
   "Understanding Activation Functions",
-  "Understanding Mini-Batch Training"
+  "Understanding Mini-Batch Training",
+  "What is Model Drift?"
 ]
