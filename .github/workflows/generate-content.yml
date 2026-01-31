@@ -49,8 +49,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add _guides/ generated-topics.json assets/images/guides/
-          git commit -m "Add new AI guide with image [automated]
-
-Generated with NVIDIA FLUX.1-schnell image
-Formatting verified and corrected automatically"
+          git commit -m "Add new AI guide with FLUX image [automated] - formatting verified"
           git push
