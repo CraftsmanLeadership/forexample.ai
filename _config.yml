@@ -1,12 +1,22 @@
 # Site settings
-title: "For Example AI"
-description: "Learn AI concepts through practical, step-by-step guides"
-url: "https://forexample.ai"
-baseurl: ""
+title: Craftsman Leadership
+email: contact@craftsmanleadership.com
+description: >-
+  Strategic Leadership for Government Contracting. Teaching contractors how to think strategically 
+  about building partnerships with the Department of Defense. Founded by Dr. Jesse W. Johnson, DSL, MAOM - 
+  Lieutenant Colonel, U.S. Air Force.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://craftsmanleadership.com" # the base hostname & protocol for your site
+author: "Dr. Jesse W. Johnson, DSL, MAOM"
+twitter_username: 
+github_username: 
 
 # Build settings
 markdown: kramdown
-permalink: pretty
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 
 # Collections
 collections:
@@ -24,15 +34,15 @@ defaults:
 
 # Exclude from processing
 exclude:
+  - Gemfile
+  - Gemfile.lock
   - node_modules
-  - scripts
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - scripts/
   - package.json
   - package-lock.json
   - README.md
-  - topics.json
-  - generated-topics.json
-  - .github
-
-# Plugins
-plugins:
-  - jekyll-seo-tag
+  - CONTENT_STRATEGY.md
