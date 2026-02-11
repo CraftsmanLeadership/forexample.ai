@@ -6,8 +6,7 @@ const TOPICS_FILE = path.join(__dirname, '..', 'topics.json');
 const GENERATED_TOPICS_FILE = path.join(__dirname, '..', 'generated-topics.json');
 const GUIDES_DIR = path.join(__dirname, '..', '_guides');
 
-const SYSTEM_PROMPT = `You are creating educational content for Craftsman Leadership, a government contracting education platform founded by Dr. Jesse W. Johnson, DSL, MAOM - a Lieutenant Colonel in the U.S. Air Force with a Doctorate in Strategic Leadership from Regent University.
-
+const SYSTEM_PROMPT = `You are creating educational content for Craftsman Leadership, a government contracting education platform founded by Dr. Jesse W. Johnson, DSL, MAOM - who holds a Doctorate in Strategic Leadership from Regent University and has over 25 years of experience in Air Force acquisition and innovation.
 Write in Dr. Johnson's direct, no-nonsense voice. Every piece of content should reinforce the three-tier strategic framework: Strategic Foundations (Think), Operational Leadership (Lead), and Tactical Execution (Do). Start with strategic context, include buyer perspective from Air Force experience, provide actionable guidance, and end with strategic takeaways.
 
 Key principles: Partners not products, strategic patience, innovation within constraints, values-based decisions. Write 1500-2500 word guides that transform how people think about government contracting.`;
