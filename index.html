@@ -1,4 +1,380 @@
----
-layout: home
-title: Home
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craftsman Leadership - Strategic Leadership for Government Contracting</title>
+    <meta name="description" content="Teaching contractors how to think strategically about building partnerships with the Department of War. Founded by Dr. Jesse W. Johnson, DSL, MAOM - Lieutenant Colonel, U.S. Air Force (Retired).">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a2332;
+            --primary-blue: #2c5f7f;
+            --accent-gold: #c19a6b;
+            --neutral-gray: #4a5568;
+            --light-gray: #e2e8f0;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background: #f7fafc;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            max-width: 400px;
+            height: auto;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.95;
+        }
+
+        .founder-info {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-top: 1rem;
+        }
+
+        .nav {
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: start;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .profile-image-container {
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--white);
+            padding: 0.5rem;
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .badge img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .credentials {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--neutral-gray);
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--primary-dark);
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .guide-card {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .guide-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .guide-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .guide-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .guide-card p {
+            color: var(--neutral-gray);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .guide-card a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .guide-card a:hover {
+            text-decoration: underline;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: var(--light-gray);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--neutral-gray);
+        }
+
+        .footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .greek-motto {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .badge {
+                bottom: -10px;
+                right: -10px;
+            }
+
+            .badge img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="Logo_image.png" alt="Craftsman Leadership" class="logo">
+            </div>
+            <h1>Strategic Leadership for Government Contracting</h1>
+            <p>Teaching contractors how to think strategically about building partnerships with the Department of War</p>
+            <p class="greek-motto">διακονέω</p>
+            <p class="founder-info">Founded by Dr. Jesse W. Johnson, DSL, MAOM - Lieutenant Colonel, U.S. Air Force (Retired)</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="#about">About</a>
+            <a href="#guides">Guides</a>
+            <a href="mailto:jesse@craftsmanleadership.com">Contact</a>
+            <a href="https://github.com/kjw3">GitHub</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="about" class="profile-section">
+            <div class="profile-image-container">
+                <img src="profile.jpg" alt="Dr. Jesse W. Johnson" class="profile-image">
+                <div class="badge">
+                    <img src="logo2.png" alt="Craftsman Leadership Badge">
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>About Dr. Jesse W. Johnson</h2>
+                <p class="credentials">DSL, MAOM • Lieutenant Colonel, U.S. Air Force (Retired)</p>
+                <p>
+                    With over two decades of strategic leadership experience in the Department of War, I've witnessed firsthand the challenges contractors face when partnering with military organizations. My mission is to bridge that gap.
+                </p>
+                <p>
+                    I believe leadership is a craft—something that requires dedication, precision, and continuous refinement. Like a master craftsman, effective leaders serve their teams and organizations with intentionality and skill.
+                </p>
+            </div>
+        </section>
+
+        <section id="guides">
+            <h2 class="section-title">Government Contracting Guides</h2>
+            <div class="guides-grid">
+                <article class="guide-card">
+                    <div class="guide-badge">Advanced</div>
+                    <h3>Navigating Other Transaction Agreements (OTAs)</h3>
+                    <p>A comprehensive guide to understanding and leveraging OTAs for non-traditional contractors working with the DoW.</p>
+                    <a href="/guides/navigating-other-transaction-agreements-otas/">Read Guide →</a>
+                    <div class="tags">
+                        <span class="tag">OTA</span>
+                        <span class="tag">Non-Traditional</span>
+                        <span class="tag">Acquisition</span>
+                    </div>
+                </article>
+
+                <article class="guide-card">
+                    <div class="guide-badge">Beginner</div>
+                    <h3>Managing Your First Government Contract</h3>
+                    <p>Essential lessons learned from successfully executing your first DoW contract, from kick-off to closeout.</p>
+                    <a href="/guides/managing-your-first-government-contract-lessons-learned/">Read Guide →</a>
+                    <div class="tags">
+                        <span class="tag">Contract Management</span>
+                        <span class="tag">First Contract</span>
+                        <span class="tag">Lessons Learned</span>
+                    </div>
+                </article>
+
+                <article class="guide-card">
+                    <div class="guide-badge">Intermediate</div>
+                    <h3>Building Strategic DoW Partnerships</h3>
+                    <p>How to move beyond transactional relationships and create lasting partnerships that serve the mission.</p>
+                    <div class="tags">
+                        <span class="tag">Strategy</span>
+                        <span class="tag">Partnerships</span>
+                        <span class="tag">Relationships</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="greek-motto">διακονέω - To Serve</p>
+        <p>&copy; 2026 Craftsman Leadership. All rights reserved.</p>
+        <p>Founded by Dr. Jesse W. Johnson, DSL, MAOM, Lt Col USAF (Ret.)</p>
+        <p style="margin-top: 1rem;">
+            <a href="mailto:jesse@craftsmanleadership.com">jesse@craftsmanleadership.com</a> | 
+            <a href="https://github.com/kjw3">GitHub</a>
+        </p>
+    </footer>
+</body>
+</html>
